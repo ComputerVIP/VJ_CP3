@@ -1,50 +1,51 @@
 What are the only colours to not evoke feelings of calmness?,"T_Red, orange, yellow, black","F_Blue, green, purple, pink","F_White, grey, brown, cyan","F_Gray, violet, jade, blood-red"
-What is the most common colour in nature?,"F_Blue","F_Yellow","T_Green","F_Red"
-What is the least common colour in nature?,"F_Blue","T_Purple","F_Yellow","F_Red"
-What is the most well-liked colour?,"T_Blue","F_Green","F_Yellow","F_Red"
-What is the most disliked colour?,"F_Blue","F_Green","T_Yellow","F_Red"
-What is the most common colour in flags?,"F_Blue","F_Green","F_Yellow","T_Red"
-What is the most common colour in flags after red?,"F_Blue","T_White","F_Green","F_Yellow"
-What is the most calming colour?,"T_Blue","F_Red","F_Orange","F_Yellow"
-What is the most calming colour after blue?,"F_Red","F_Orange","T_Green","F_Yellow"
+What is the most common colour in nature?,F_Blue,F_Yellow,T_Green,F_Red
+What is the least common colour in nature?,F_Blue,T_Purple,F_Yellow,F_Red
+What is the most well-liked colour?,T_Blue,F_Green,F_Yellow,F_Red
+What is the most disliked colour?,F_Blue,F_Green,T_Yellow,F_Red
+What is the most common colour in flags?,F_Blue,F_Green,F_Yellow,T_Red
+What is the most common colour in flags after red?,F_Blue,T_White,F_Green,F_Yellow
+What is the most calming colour?,T_Blue,F_Red,F_Orange,F_Yellow
+What is the most calming colour after blue?,F_Red,F_Orange,T_Green,F_Yellow
 What colours can stars be?,"F_Blue, green, purple, pink","F_Red, orange, yellow, black","T_White, grey, brown, cyan","F_Gray, violet, jade, blood-red"
-What is the most common artificial colour?,"F_Blue","T_Green","F_Yellow","F_Red"
-What is the most common colour in food?,"F_Blue","F_Yellow","T_Green","F_Red"
-What is the darkest black we have made?,"F_Jett-black","F_Black 3.0","T_Vantablack","F_Tentablack"
-What percentage of light does Vantablack absorb?,"F_99%","F_99.5%","T_99.965%","F_99.999%"
-What is the most common colour in the world?,"T_Green","F_Blue","F_Yellow","F_Red"
-What percent of people cannot see colour?,"F_1%","F_5%","T_8%","F_10%"
-What percentage of people are colourblind?,"F_1%","F_16%","T_4%","F_10%"
-Who is more likely to be colourblind?, "T_Men","F_Old people","F_Women","F_Children"
-Where in the world has the most colourblind people?,"F_Africa","F_Asia","T_India","F_Australia"
-How many colourblind people are born every minute?,"F_38","F_2","F_9","T_12"
-What ethnicity is most likely to be colourblind?,"F_Black","F_Asian","T_White","F_Hispanic"
-What is the hardest colour to identify?,"F_Absolute Zero","F_Yellow-green","T_Red-green","F_Purple"
-What is the least well known colour?,"F_Absolute Zero","F_Querticon","T_Smaragdine","F_Green-yellow-orange"
-What is the rarest colour?,"F_Air superiority blue","F_Querticon","F_Jade","T_Magneta"
-What is the most common colour on traffic signs?,"F_Blue","F_Green","T_Yellow","F_Red"
-What is the hex code for white?,"F_#000000","F_#FFFFF","T_#FFFFFF","F_#0000FF"
-What is the hex code for black?,"F_#0000000","T_#000000","F_#FFFFFF","F_#0000FF"
+What is the most common artificial colour?,F_Blue,T_Green,F_Yellow,F_Red
+What is the most common colour in food?,F_Blue,F_Yellow,T_Green,F_Red
+What is the darkest black we have made?,F_Jett-black,F_Black 3.0,T_Vantablack,F_Tentablack
+What percentage of light does Vantablack absorb?,F_99%,F_99.5%,T_99.965%,F_99.999%
+What is the most common colour in the world?,T_Green,F_Blue,F_Yellow,F_Red
+What percent of people cannot see colour?,F_1%,F_5%,T_8%,F_10%
+What percentage of people are colourblind?,F_1%,F_16%,T_4%,F_10%
+Who is more likely to be colourblind?," ""T_Men""",F_Old people,F_Women,F_Children
+Where in the world has the most colourblind people?,F_Africa,F_Asia,T_India,F_Australia
+How many colourblind people are born every minute?,F_38,F_2,F_9,T_12
+What ethnicity is most likely to be colourblind?,F_Black,F_Asian,T_White,F_Hispanic
+What is the hardest colour to identify?,F_Absolute Zero,F_Yellow-green,T_Red-green,F_Purple
+What is the least well known colour?,F_Absolute Zero,F_Querticon,T_Smaragdine,F_Green-yellow-orange
+What is the rarest colour?,F_Air superiority blue,F_Querticon,F_Jade,T_Magneta
+What is the most common colour on traffic signs?,F_Blue,F_Green,T_Yellow,F_Red
+What is the hex code for white?,F_#000000,F_#FFFFF,T_#FFFFFF,F_#0000FF
+What is the hex code for black?,F_#0000000,T_#000000,F_#FFFFFF,F_#0000FF
 What is the RGB code for green?,"F_0, 0, 255","F_255, 0, 0","T_0, 255, 0","F_255, 255, 0"
-What is the RGB code for blue?,"F_0, 0, 255","T_0, 0, 255","F_255, 0, 0","F_255, 255, 0"
-What is the RGB code for red?,"F_0, 0, 255","F_255, 0, 0","T_255, 0, 0","F_255, 255, 0"
+What is the RGB code for blue?,"F_0, 0, 254","T_0, 0, 255","F_255, 0, 0","F_255, 255, 0"
+What is the RGB code for red?,"F_0, 0, 255","F_255, 0, 255","T_255, 0, 0","F_255, 255, 0"
 What is the RGB code for yellow?,"F_0, 0, 255","F_255, 0, 0","F_255, 255, 0","T_255, 255, 0"
 What is the RGB code for cyan?,"F_0, 255, 0","F_255, 0, 0","T_0, 255, 255","F_255, 255, 0"
 What is the RGB code for magenta?,"F_0, 255, 0","F_255, 0, 0","T_255, 0, 255","F_255, 255, 0"
-What is George Washington's favourite colour (probably)?,"F_Blue","T_Green","F_Yellow","F_Red"
-What is Taylor Swift's favourite colour?,"F_Pink","F_Green","T_Purple","F_Red"
-What is Chester Bennington's favourite colour?,"F_Lime-green","F_Green","T_Pink","F_Purple"
-What is Ovechkin's favourite colour?,"T_Blue","F_Teal","F_White","F_Red"
-What is Cecily's favourite colour?,"F_Blue","F_Green","T_Purple","F_Red"
-What's Tate's favourite colour?,"F_Blue","T_Green","F_Purple","F_Red"
-What is Jonas' favourite colour?,"F_Blue","F_Green","F_Purple","T_Red"
-What is Asher's favourite colour?,"T_Blue","F_Green","F_Red","F_Yellow"
-What is Mr. President's favourite colour?,"T_Blue","F_Green","F_Red","F_Yellow"
-What is Alex's favourite colour?,"F_Blue","F_Purple","F_Red","T_Teal"
-What is Luke's favourite colour?,"F_Jade","F_Green","F_Purple","T_Orange"
-What is the colour of Wordle's background?,"F_Grey","F_Green","T_White","F_Red"
-What is the most common colour theme in video games?,"F_Blue","F_Green","T_Red","F_Yellow"
-What is the most common colour theme?,"T_Blue","F_Green","F_Red","F_Yellow"
-What colour are ducks?,"T_White","F_Green","T_Yellow","F_Red"
-What colour is stupid?,"F_Blue","F_Green","T_Red","F_Yellow"
-What colour is mentioned the most in this list of questions?,"T_Blue","F_Green","F_Red","F_Yellow"
+What is George Washington's favourite colour (probably)?,F_Blue,T_Green,F_Yellow,F_Red
+What is Taylor Swift's favourite colour?,F_Pink,F_Green,T_Purple,F_Red
+What is Chester Bennington's favourite colour?,F_Lime-green,F_Green,T_Pink,F_Purple
+What is Ovechkin's favourite colour?,T_Blue,F_Teal,F_White,F_Red
+What is Cecily's favourite colour?,F_Blue,F_Green,T_Purple,F_Red
+What's Tate's favourite colour?,F_Blue,T_Green,F_Purple,F_Red
+What is Jonas' favourite colour?,F_Blue,F_Green,F_Purple,T_Red
+What is Asher's favourite colour?,T_Blue,F_Green,F_Red,F_Yellow
+What is Mr. President's favourite colour?,T_Blue,F_Green,F_Red,F_Yellow
+What is Alex's favourite colour?,F_Blue,F_Purple,F_Red,T_Teal
+What is Luke's favourite colour?,F_Jade,F_Green,F_Purple,T_Orange
+What is the colour of Wordle's background?,F_Grey,F_Green,T_White,F_Red
+What is the most common colour theme in video games?,F_Blue,F_Green,T_Red,F_Yellow
+What is the most common colour theme?,T_Blue,F_Green,F_Red,F_Yellow
+What colour are ducks?,T_White,F_Green,T_Yellow,F_Red
+What colour is stupid?,F_Blue,F_Green,T_Red,F_Yellow
+What colour is mentioned the most in this list of questions?,T_Blue,F_Green,F_Red,F_Yellow
+Gay,F_Gay,F_Gay,T_Gay,F_Gay
