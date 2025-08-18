@@ -6,6 +6,7 @@ from tkinter import ttk
 from tkinter import simpledialog
 import csv
 import random
+import time
 
 repeat = 0
 
@@ -32,6 +33,11 @@ def main(repeat):
     # Initialize score
     score = 0
     rounds = 0
+    question_start_time = 0
+    time_score = 0
+
+    #Type of game
+    type = ""
 
     def end_quiz():
         messagebox.showinfo("Quiz Ended", "You ended the quiz")
@@ -49,6 +55,51 @@ def main(repeat):
         
         questions.clear()  # Clear the questions list after saving to CSV
 
+    def regular():
+        nonlocal type
+        type = "regular"
+        messagebox.showinfo("Regular Mode", "You selected Regular mode")
+        ask_question(mainframe, questions)
+        return type
+
+    def arcade():
+        nonlocal type
+        type = "arcade"
+        messagebox.showinfo("Arcade Mode", "You selected Arcade mode")
+        ask_question(mainframe, questions)
+        return type
+
+    def show_leaderboard():
+        for child in mainframe.winfo_children():
+            child.destroy()
+        try:
+            with open('Quiz\scores.csv', 'r') as file:
+                reader = csv.reader(file)
+                header = next(reader, None)
+                if header:
+                    rows = list(reader)
+                    rows.sort(key=lambda x: float(x[0]), reverse=True)
+        except FileNotFoundError:
+            leaderboard_text = "No scores available."
+
+        columns = ["Score", "Name", "Rounds"]
+        tree = ttk.Treeview(mainframe, columns=columns, show='headings')
+        for col in columns:
+            tree.heading(col, text=col)
+            tree.column(col, anchor="center",width=100)
+
+        for row in rows:
+            tree.insert("", "end", values=row)
+        
+        scrollbar = ttk.Scrollbar(mainframe, orient="vertical", command=tree.yview)
+        tree.configure(yscroll=scrollbar.set)
+        tree.grid(column=0, row=0, sticky=(tk.N, tk.W, tk.E, tk.S))
+        scrollbar.grid(column=1, row=0, sticky=(tk.N, tk.S))
+
+        mainframe.columnconfigure(0, weight=1)
+        mainframe.rowconfigure(0, weight=1)
+
+        ttk.Button(mainframe, text="Back to Menu", command=lambda: to_menu()).grid(column=0, row=1, pady=10, columnspan=2)
         
 
     def to_menu():
@@ -63,14 +114,36 @@ def main(repeat):
         ttk.Label(mainframe, text="Quiz Game", font=("Helvetica", 16)).grid(column=0, row=0, columnspan=2, pady=10)
 
         # Start the quiz
-        ttk.Button(mainframe, text="Start Quiz", command=lambda: ask_question(mainframe, questions)).grid(column=0, row=1, pady=10, columnspan=2)
+        ttk.Button(mainframe, text="Regular mode", command= regular).grid(column=0, row=1, pady=10, columnspan=2)
 
-        ttk.Button(mainframe, text="Add questions", command=lambda: add_question()).grid(column=0, row=2, pady=10, columnspan=2)
+        ttk.Button(mainframe, text="Arcade mode", command=arcade).grid(column=0, row=2, pady=10, columnspan=2)
+
+        ttk.Button(mainframe, text="Add questions", command=lambda: add_question()).grid(column=0, row=3, pady=10, columnspan=2)
+        ttk.Button(mainframe, text="Leaderboard", command=lambda: show_leaderboard()).grid(column=0, row=4, pady=10, columnspan=2)
 
         ttk.Button(mainframe, text="Exit", command=lambda: end_quiz()).grid(column=0, row=10, pady=10, columnspan=2)
     
     def show_score():
-        messagebox.showinfo("Score", f"Your score is: {score}/{rounds}")
+        nonlocal type
+        if type == "arcade":
+            messagebox.showinfo("Score", f"Your arcade score is {time_score}")
+            rows = []
+            with open('Quiz\scores.csv', 'r') as file:
+                reader = csv.reader(file)
+                header = next(reader, None)
+                for row in reader:
+                    rows.append(row)
+            name = simpledialog.askstring("Name", "Enter your name:")
+            if name:
+                rows.append([str(time_score), name, str(rounds)])
+            rows.sort(key=lambda x: float(x[0]), reverse=True)
+            with open('Quiz\scores.csv', 'w', newline='') as file:
+                writer = csv.writer(file)
+                if header:
+                    writer.writerow(header)
+                writer.writerows(rows)
+        else:
+            messagebox.showinfo("Score", f"Your score is: {score}/{rounds}")
         to_menu()  # Return to the main menu after showing the score
 
     def add_question():
@@ -100,6 +173,7 @@ def main(repeat):
 
         nonlocal rounds
         nonlocal score
+        nonlocal type
 
         # Clear all widgets in the mainframe
         for child in mainframe.winfo_children():
@@ -113,6 +187,11 @@ def main(repeat):
         # Display the question
         ttk.Label(mainframe, text=question[0], font=("Helvetica", 16), wraplength=350).grid(column=0, row=0, columnspan=2, pady=10)
 
+        def on_correct():
+            elapsed = time.time() - question_start_time
+            increment_score()
+            ask_question(mainframe, questions)
+
         # Display the options
         for idx, option in enumerate(options):
             if "T_" in option:
@@ -121,11 +200,7 @@ def main(repeat):
                 ttk.Button(
                     mainframe,
                     text=option_text,
-                    command=lambda: [
-                        messagebox.showinfo("Correct!", "You were correct!"),
-                        ask_question(mainframe, questions),
-                        increment_score()
-                    ]
+                    command=on_correct
                 ).grid(column=0, row=idx + 1, pady=10, columnspan=2)
             else:
                 option_text = option.replace("F_", "")
@@ -141,12 +216,34 @@ def main(repeat):
                 ).grid(column=0, row=idx + 1, pady=10, columnspan=2)
 
         ttk.Button(mainframe, text="End Quiz", command=lambda: show_score()).grid(column=1, row=len(options) + 1, pady=10, columnspan=2)
+        nonlocal question_start_time
+        question_start_time = time.time()
 
     def increment_score():
-        nonlocal score
         nonlocal rounds
-        score += 1
-        rounds += 1
+        if type == "arcade":
+            nonlocal time_score
+            nonlocal question_start_time
+            elapsed = time.time() - question_start_time
+            if elapsed < 1:
+                time_score += 10
+                add = 10
+            elif elapsed <2:
+                time_score +=5
+                add = 5
+            elif elapsed < 5:
+                time_score += 3
+                add = 3
+            elif elapsed < 10:
+                time_score += 1
+                add = 1
+            rounds += 1
+            messagebox.showinfo("Correct!", f"You were correct!\nTime taken: {elapsed:.2f} seconds\nAnd scored {add} points\nTotal Arcade Score: {time_score}")
+        else:
+            nonlocal score
+            score += 1
+            rounds += 1
+            messagebox.showinfo("Correct!", f"You were correct!\nScore: {score}/{rounds}")
     def increment_rounds():
         nonlocal rounds
         rounds += 1
