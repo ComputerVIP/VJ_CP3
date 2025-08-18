@@ -1,5 +1,6 @@
 #Vincent Johnson - Quiz game
 
+# Imports
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
@@ -8,6 +9,7 @@ import csv
 import random
 import time
 
+# For repeating the program
 repeat = 0
 
 def main(repeat):
@@ -47,6 +49,7 @@ def main(repeat):
         repeat = 1
         root.destroy()
 
+        # Save questions to CSV file
         with open('Quiz\questions1.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             for question in questions:
@@ -55,9 +58,10 @@ def main(repeat):
                 except Exception as e:
                     print(f"Error writing question {question[0]}: {e}")
         
-        questions.clear()  # Clear the questions list after saving to CSV
+        questions.clear()  # Clear the questions variable after saving to CSV
 
     def regular():
+        # Sets the type of game to regular
         nonlocal type
         type = "regular"
         messagebox.showinfo("Regular Mode", "You selected Regular mode")
@@ -65,6 +69,7 @@ def main(repeat):
         return type
 
     def arcade():
+        # Sets the type of game to arcade
         nonlocal type
         type = "arcade"
         messagebox.showinfo("Arcade Mode", "You selected Arcade mode")
@@ -72,8 +77,10 @@ def main(repeat):
         return type
 
     def show_leaderboard():
+        # Clears the window
         for child in mainframe.winfo_children():
             child.destroy()
+        # Reads the scores
         try:
             with open('Quiz\scores.csv', 'r') as file:
                 reader = csv.reader(file)
@@ -84,6 +91,7 @@ def main(repeat):
         except FileNotFoundError:
             leaderboard_text = "No scores available."
 
+        # Scores display
         columns = ["Score", "Name", "Rounds"]
         tree = ttk.Treeview(mainframe, columns=columns, show='headings')
         for col in columns:
@@ -101,6 +109,7 @@ def main(repeat):
         mainframe.columnconfigure(0, weight=1)
         mainframe.rowconfigure(0, weight=1)
 
+        #Back to menu button
         ttk.Button(mainframe, text="Back to Menu", command=lambda: to_menu()).grid(column=0, row=1, pady=10, columnspan=2)
         
 
@@ -110,22 +119,25 @@ def main(repeat):
         rounds = 0
         score = 0
 
+        #Clearing the window
         for child in mainframe.winfo_children():
             child.destroy()
 
         ttk.Label(mainframe, text="Quiz Game", font=("Helvetica", 16)).grid(column=0, row=0, columnspan=2, pady=10)
 
-        # Start the quiz
+        # Function buttons
         ttk.Button(mainframe, text="Regular mode", command= regular).grid(column=0, row=1, pady=10, columnspan=2)
 
         ttk.Button(mainframe, text="Arcade mode", command=arcade).grid(column=0, row=2, pady=10, columnspan=2)
 
         ttk.Button(mainframe, text="Add questions", command=lambda: add_question()).grid(column=0, row=3, pady=10, columnspan=2)
+
         ttk.Button(mainframe, text="Leaderboard", command=lambda: show_leaderboard()).grid(column=0, row=4, pady=10, columnspan=2)
 
         ttk.Button(mainframe, text="Exit", command=lambda: end_quiz()).grid(column=0, row=10, pady=10, columnspan=2)
     
     def show_score():
+        # Checks if it was arcade mode or not
         nonlocal type
         if type == "arcade":
             messagebox.showinfo("Score", f"Your arcade score is {time_score}")
@@ -135,24 +147,33 @@ def main(repeat):
                 header = next(reader, None)
                 for row in reader:
                     rows.append(row)
+
+            # Adds info to scores
             name = simpledialog.askstring("Name", "Enter your name:")
             if name:
                 rows.append([str(time_score), name, str(rounds)])
+
+            # Sorts with highest score on the top
             rows.sort(key=lambda x: float(x[0]), reverse=True)
+
+            # Writes to leaderboard
             with open('Quiz\scores.csv', 'w', newline='') as file:
                 writer = csv.writer(file)
                 if header:
                     writer.writerow(header)
                 writer.writerows(rows)
         else:
+            # Shows score
             messagebox.showinfo("Score", f"Your score is: {score}/{rounds}")
         to_menu()  # Return to the main menu after showing the score
 
     def add_question():
+        # Asks for a new question
         nonlocal questions
         question_text = simpledialog.askstring("Add Question", "Enter the question:")
         if not question_text:
             return
+        # Asks for options and correct answer
         options = []   
         for i in range(1, 5):
             option = simpledialog.askstring(f"Option {i}", f"Enter option {i}:")
@@ -165,6 +186,8 @@ def main(repeat):
             return
         correct_index = int(correct_option) - 1
 
+
+        # Randomly shuffle the options
         options = [f"T_{options[correct_index]}"] + [f"F_{opt}" for idx, opt in enumerate(options) if idx != correct_index]
         random.shuffle(options)
 
@@ -223,9 +246,11 @@ def main(repeat):
 
     def increment_score():
         nonlocal rounds
+        # Checks if it was arcade mode or not
         if type == "arcade":
             nonlocal time_score
             nonlocal question_start_time
+            # Scores based on timing
             elapsed = time.time() - question_start_time
             if elapsed < 1:
                 time_score += 10
