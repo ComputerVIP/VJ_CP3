@@ -28,7 +28,9 @@ def main(repeat):
     with open('Quiz\questions1.csv', 'r') as file:
         reader = csv.reader(file)
         for row in reader:
-            questions.append([row[0], [row[1], row[2], row[3], row[4]]])  # Question, options, correct answer index
+            options = row[1:]  # Get all options except the question text
+            random.shuffle(options)  # Randomly shuffle the options
+            questions.append([row[0], options])  # Question, options, correct answer index
 
     # Initialize score
     score = 0
