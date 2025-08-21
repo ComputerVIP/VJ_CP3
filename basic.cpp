@@ -1,3 +1,4 @@
+// VJ test thingy
 #include <iostream>
 
 class Hello {
