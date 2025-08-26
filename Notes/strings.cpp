@@ -3,6 +3,26 @@
 
 using namespace std;
 
+/*
+What is Narrowing?
+    Narrowing is when you convert a larger data type to a smaller data type
+What is a basic way to generate random numbers in C++?
+What is an array?
+    List of variables of the same type
+How do I create an array?
+    datatype name[size] = {values};
+How do you make strings in C?
+    char str[] = "Hello";
+How did C++ improve creating strings? 
+    char str[6] = "Hello";
+How do I search a string?
+    str.find("substring");
+How do I modify a string?
+    str.replace(start_index, length, "new_substring");
+What are some string methods? 
+    .length(), .find(), .replace(), .substr()
+*/
+
 int main() {
     // Strings
     string str = "Hello, World!";
