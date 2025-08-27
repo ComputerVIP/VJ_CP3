@@ -73,6 +73,28 @@ g++ --version
 ```
 
 + Install FLTK (A second time)
+```bash
+pacman -S mingw-w64-x86_64-fltk
+```
+
++ Go to current directory
+```bash
+cd /c/folder_name/project_folder
+```
+
++ Compile app
+If no .exe exists:
+```bash
+g++ project_name.cpp -o name_to_compile_as `fltk-config --cxxflags --ldflags`
+```
+f it does exist, skip this step
+
++ Run code
+```bash
+./name_of_file.exe
+```
+
+This should allow it to run, do note, it also will run regular .cpp files with this configuration.
 
 ## Current Features
 ---
