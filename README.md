@@ -32,7 +32,7 @@ This project will require MSYS2, MYSY64, and FLTK.
 
 After this, you must configure your terminal to run through MSYS2, I did this through VSCODE, the steps for this follow:
 
-+ Find the path of your mingw64.exe
++ Find the path of your mingw64.exe  
 Should be here:
 ```bash
 C:\msys64\mingw64.exe
