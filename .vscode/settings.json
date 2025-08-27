@@ -1,0 +1,9 @@
+{
+  "cmake.generator": "MinGW Makefiles",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
+  "cmake.configureOnOpen": false,
+  "cmake.ctestArgs": [],
+  "terminal.integrated.env.windows": {
+    "PATH": "C:/Qt/6.9.1/mingw_64/bin;${env:PATH}"
+  }
+}
