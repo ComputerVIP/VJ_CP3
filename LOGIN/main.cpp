@@ -1,5 +1,5 @@
 // Vincent Johnson, User login
-// g++ main.cpp -o app `fltk-config --cxxflags --ldflags`        
+// g++ main.cpp -o app `fltk-config --cxxflags --ldflags`
 
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
@@ -15,7 +15,7 @@ using namespace std;
 
 // Store admins and users
 vector<string> admins = {"Vienna", "Vincent", "Clang"};
-vector<string> users  = {"Alice", "Bob", "Charlie"};
+vector<string> users  = {"Alice", "Bob", "Charlie", "David", "Eve"};
 
 // Struct to hold widgets for callbacks
 struct Widgets {
@@ -27,7 +27,7 @@ struct Widgets {
 // Function to add new users
 void addUser(const string& newUser, const string& newType) {
     if (newType == "Admin") {
-        admins.push_back(newUser);
+        admins.push_back(newUser); // Only works with vector<string>
     } else {
         users.push_back(newUser);
     }
@@ -35,10 +35,23 @@ void addUser(const string& newUser, const string& newType) {
 
 // Button callback
 void button_cb(Fl_Widget* w, void* data) {
-    Widgets* widgets = (Widgets*)data;
-    string name = widgets->input->value();
+    Widgets* widgets = (Widgets*)data; // Cast back to Widgets*
+    const char* val = widgets->input->value(); // Get input value
+    string name = val ? val : ""; // Handle null input
 
-    // Check if name is an admin
+    // If dropdown is already visible → finalize signup
+    if (widgets->typeChoice->visible()) { // If the box is visible
+        string role = widgets->typeChoice->text(); // Get selected role
+        addUser(name, role); // Add new user
+
+        string msg = "Signed up new " + role + ": " + name; // Confirmation message
+        widgets->output->value(msg.c_str()); // Show message
+
+        widgets->typeChoice->hide(); // hide again after signup
+        return;
+    }
+
+    // Check admins
     for (auto& a : admins) {
         if (name == a) {
             string msg = "Welcome Admin " + a;
@@ -47,7 +60,7 @@ void button_cb(Fl_Widget* w, void* data) {
         }
     }
 
-    // Check if name is a user
+    // Check users
     for (auto& u : users) {
         if (name == u) {
             string msg = "Welcome User " + u;
@@ -56,15 +69,12 @@ void button_cb(Fl_Widget* w, void* data) {
         }
     }
 
-    // If not found, "sign them up" with dropdown choice
-    int idx = widgets->typeChoice->value(); // 0=Admin, 1=User
-    string role = widgets->typeChoice->menu()[idx].label();
-
-    addUser(name, role);
-
-    string msg = "Signed up new " + role + ": " + name;
-    widgets->output->value(msg.c_str());
+    // Not found → show dropdown, ask for role
+    widgets->typeChoice->show();
+    widgets->output->value("New user, select a role then press Submit again.");
 }
+
+
 
 int main(int argc, char** argv) {
     Fl_Window* win = new Fl_Window(400, 250, "FLTK Signup Example");
@@ -77,6 +87,7 @@ int main(int argc, char** argv) {
     choice->add("Admin");
     choice->add("User");
     choice->value(1); // Default to "User"
+    choice->hide(); // Hide initially
 
     // Output field
     Fl_Output* output = new Fl_Output(120, 120, 200, 30, "Result:");
@@ -89,7 +100,7 @@ int main(int argc, char** argv) {
     button->callback(button_cb, widgets);
 
     win->end();
-    win->show(argc, argv);
+    win->show(argc, argv); // Show window
 
     return Fl::run();
 }
