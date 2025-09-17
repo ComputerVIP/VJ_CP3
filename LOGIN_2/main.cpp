@@ -93,17 +93,17 @@ int main(int argc, char** argv) {
 
     // Input field
     Fl_Input* input = new Fl_Input(120, 40, 200, 30, "Enter name:");
-    Fl_Input* input2 = new Fl_Input(120, 80, 200, 20, "Enter password:");
+    Fl_Input* input2 = new Fl_Input(120, 80, 200, 30, "Enter password:");
 
     // Dropdown (choice)
-    Fl_Choice* choice = new Fl_Choice(120, 100, 200, 30, "Role:");
+    Fl_Choice* choice = new Fl_Choice(120, 115, 200, 30, "Role:");
     choice->add("Admin");
     choice->add("User");
     choice->value(1); // Default to "User"
     choice->hide(); // Hide initially
 
     // Output field
-    Fl_Output* output = new Fl_Output(120, 140, 200, 30, "Result:");
+    Fl_Output* output = new Fl_Output(120, 150, 200, 30, "Result:");
 
     // Button
     Fl_Button* button = new Fl_Button(150, 190, 100, 30, "Submit");
