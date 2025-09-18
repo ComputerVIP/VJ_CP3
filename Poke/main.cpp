@@ -1,20 +1,17 @@
-//g++ main.cpp battle.cpp -o app `fltk-config --cxxflags --ldflags`
+//g++ main.cpp battle.cpp choose.cpp `fltk-config --cxxflags --ldflags` -o app
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Button.H>
 #include "battle.h"
 
-// Callback function
-void button_cb(Fl_Widget* w, void* data) {
-    Fl_Window* main_win = (Fl_Window*)data;
-    my_function(main_win); // Pass main window to battle
-}
+int main() {
+    Fl_Window* main_win = new Fl_Window(300, 200, "Main Menu");
+    Fl_Button* play = new Fl_Button(100, 80, 100, 30, "Play");
+    play->callback([](Fl_Widget* w, void* data) {
+        choice(static_cast<Fl_Window*>(data));
+    }, main_win);
 
-int main(int argc, char** argv) {
-    Fl_Window* win = new Fl_Window(400, 250, "FLTK Signup Example");
-    Fl_Button* button = new Fl_Button(150, 170, 100, 30, "Submit");
-    button->callback(button_cb, win); // Pass win as data
-    win->end();
-    win->show(argc, argv);
+    main_win->end();
+    main_win->show();
     return Fl::run();
 }
