@@ -8,6 +8,7 @@ struct Pokemon {
     int damage;
     int dodge;
     int health;
+    int energy;
 };
 
 int choice(Fl_Window* main_win);

@@ -42,7 +42,7 @@ int main() {
     int choice;
     cin >> choice;
 
-    if (choice == static_cast<int>(Actoin::List)) {
+    if (choice == static_cast<int>(Action::List)) {
         cout << "You chose list\n";
     } else if (choice == Options::Add) {
         cout << "You chose add\n";
