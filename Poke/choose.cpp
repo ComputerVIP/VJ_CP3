@@ -4,6 +4,8 @@
 #include <FL/Fl_Box.H>
 #include <fstream>
 #include <sstream>
+#include <iostream>
+#include <random>
 #include <vector>
 #include "battle.h"
 
@@ -28,11 +30,13 @@ std::vector<Pokemon> load_pokemon() {
             s.erase(s.find_last_not_of(" \t\r\n") + 1);
             return s;
         };
-
         p.damage = std::stoi(trim(dmg));
         p.dodge  = std::stoi(trim(ddg));
         p.health = std::stoi(trim(hp));
         p.energy = std::stoi(trim(en));
+
+        std::cout << "Loaded " << p.name << " with energy " << p.energy << " and health " << p.health<<"\n";
+
 
         list.push_back(p);
     }
@@ -48,12 +52,33 @@ int choice(Fl_Window* main_win) {
     int y = 20;
     for (auto& p : pokes) {
         Fl_Button* b = new Fl_Button(50, y, 200, 30, p.name.c_str());
+
+        // Give callback access to both pokes and chosen Pokemon
         b->callback([](Fl_Widget* w, void* data) {
-            auto pack = static_cast<std::pair<Fl_Window*,Pokemon>*>(data);
+            auto pack = static_cast<std::tuple<Fl_Window*, Pokemon, std::vector<Pokemon>*>*>(data);
+            Fl_Window* main_win = std::get<0>(*pack);
+            Pokemon player = std::get<1>(*pack);
+            std::vector<Pokemon>* pokes = std::get<2>(*pack);
+
+            // RNG for opponent
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<> dist(0, pokes->size() - 1);
+
+            Pokemon opponent = (*pokes)[dist(gen)];
+
+            // Make sure opponent isn’t the same as player
+            if (opponent.name == player.name && pokes->size() > 1) {
+                opponent = (*pokes)[(dist(gen) + 1) % pokes->size()];
+            }
+            std::cout << "You chose " << player.name << " vs " << opponent.name << "\n";
+
             w->window()->hide();
-            battle(pack->first, pack->second);
+            battle(main_win, player, opponent);
+
             delete pack;
-        }, new std::pair<Fl_Window*,Pokemon>(main_win, p));
+        }, new std::tuple<Fl_Window*, Pokemon, std::vector<Pokemon>*>(main_win, p, &pokes));
+
         y += 40;
     }
 
@@ -61,4 +86,3 @@ int choice(Fl_Window* main_win) {
     win->show();
     return Fl::run();
 }
-

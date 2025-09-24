@@ -1,4 +1,4 @@
-//g++ main.cpp battle.cpp choose.cpp `fltk-config --cxxflags --ldflags` -o app
+//g++ main.cpp battle.cpp choose.cpp -o app `fltk-config --cxxflags --ldflags` -mconsole
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Button.H>

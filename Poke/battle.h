@@ -1,7 +1,9 @@
 #pragma once
 #include <FL/Fl_Window.H>
+#include <iostream>
 #include <string>
 
+// Pokemon definition
 struct Pokemon {
     std::string name;
     std::string type;
@@ -11,5 +13,26 @@ struct Pokemon {
     int energy;
 };
 
+// Runtime stats for battles
+struct BattleStats {
+    int damage;
+    int dodge;
+    int health;
+    int energy;
+};
+
+// Enemy/player action options
+enum Action {
+    ATTACK,
+    HEAL,
+    REST
+};
+
+// Main battle function
+int battle(Fl_Window* main_win, const Pokemon& player, const Pokemon& opponent);
+
+// Choice function
 int choice(Fl_Window* main_win);
-int battle(Fl_Window* main_win, const Pokemon& selected);
+
+// Enemy turn function
+void enemyTurn(BattleStats& playerStats, BattleStats& opponentStats);
