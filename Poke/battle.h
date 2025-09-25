@@ -35,4 +35,6 @@ int battle(Fl_Window* main_win, const Pokemon& player, const Pokemon& opponent);
 int choice(Fl_Window* main_win);
 
 // Enemy turn function
-void enemyTurn(BattleStats& playerStats, BattleStats& opponentStats);
+void enemyTurn(BattleStats& playerStats, BattleStats& opponentStats,
+               Fl_Window* battle_win, Fl_Window* main_win);
+
