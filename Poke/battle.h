@@ -15,6 +15,7 @@ struct Pokemon {
 
 // Runtime stats for battles
 struct BattleStats {
+    std:: string type;
     int damage;
     int dodge;
     int health;

@@ -23,7 +23,7 @@ void lightAttackCallback(Fl_Widget* w, void* data) {
         return;
     }
 
-    int damage = static_cast<int>(std::ceil(0.65 * playerStats.damage));
+    int damage = static_cast<int>(std::ceil(0.45 * playerStats.damage));
     playerStats.energy -= 2;
 
     std::random_device rd;
@@ -91,8 +91,8 @@ void heavyAttackCallback(Fl_Widget* w, void* data) {
         return;
     }
 
-    int damage = static_cast<int>(1.25 * playerStats.damage);
-    playerStats.energy -= 7;
+    int damage = static_cast<int>(1.45 * playerStats.damage);
+    playerStats.energy -= 9;
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -102,7 +102,7 @@ void heavyAttackCallback(Fl_Widget* w, void* data) {
         fl_message("Opponent dodged your heavy attack!\n Energy: %d", playerStats.energy);
     } else {
         opponentStats.health -= damage;
-        fl_message("Light Attack dealt %d!\nOpponent health: %d\nYour energy: %d", damage, opponentStats.health, playerStats.energy);
+        fl_message("Heavy Attack dealt %d!\nOpponent health: %d\nYour energy: %d", damage, opponentStats.health, playerStats.energy);
     }
     if (opponentStats.health <= 0) {
         opponentStats.health = 0;
@@ -140,6 +140,7 @@ void restCallback(Fl_Widget* w, void* data) {
 
     int energyGain = 5;
     playerStats.energy += energyGain;
+    playerStats.health -= 3; // Lose some health when resting
     fl_message("You rested and regained %d energy!\nYour energy: %d", energyGain, playerStats.energy);
 
     enemyTurn(playerStats, opponentStats, battle_win, main_win);
@@ -169,7 +170,7 @@ void enemyTurn(BattleStats& playerStats, BattleStats& opponentStats,Fl_Window* b
                     fl_message("You dodged the enemy's attack!");
                     break;
                 }
-                playerStats.health -= floor(0.65*dmg);
+                playerStats.health -= floor(0.40*dmg);
                 opponentStats.energy -= 2;
                 fl_message("Enemy attacked you for %d!\nYour health: %d",
                         dmg, playerStats.health);
@@ -214,8 +215,8 @@ void enemyTurn(BattleStats& playerStats, BattleStats& opponentStats,Fl_Window* b
                     fl_message("You dodged the enemy's attack!");
                     break;
                 }
-                playerStats.health -= floor(1.25*dmg);
-                opponentStats.energy -= 7;
+                playerStats.health -= floor(1.40*dmg);
+                opponentStats.energy -= 9;
                 fl_message("Enemy attacked you for %d!\nYour health: %d",
                         dmg, playerStats.health);
                 if (playerStats.health <= 0){
@@ -240,6 +241,7 @@ void enemyTurn(BattleStats& playerStats, BattleStats& opponentStats,Fl_Window* b
         case REST: {
             int restAmount = 5;
             opponentStats.energy += restAmount;
+            opponentStats.health -= 3; // Lose some health when resting
             fl_message("Enemy rested for %d!\nOpponent energy: %d",
                        restAmount, opponentStats.energy);
             break;
@@ -250,21 +252,54 @@ void enemyTurn(BattleStats& playerStats, BattleStats& opponentStats,Fl_Window* b
 
 
 int battle(Fl_Window* main_win, const Pokemon& player, const Pokemon& opponent) {
+    fl_message("Welcome to the battle! There are 3 types of actions:\n"
+"1. Attack (Light, Regular, Heavy) - Deals damage to opponent. Consumes energy.\n"
+"2. Heal - Restores a small amount of your health.\n"
+"3. Rest - Regains a small amount of your energy, lose some health.\n\n"
+"Each action has its own strategy and energy cost. Choose wisely!\n"
+"You are battling %s! Your type is %s and theirs is %s", opponent.name.c_str(), player.type.c_str(), opponent.type.c_str());
     Fl_Window* win = new Fl_Window(400, 300, "Battle");
 
-    BattleStats playerStats {player.damage, player.dodge, player.health, player.energy};
-    BattleStats opponentStats {opponent.damage, opponent.dodge, opponent.health, opponent.energy};
+    BattleStats playerStats {player.type,player.damage, player.dodge, player.health, player.energy};
+    BattleStats opponentStats {opponent.type,opponent.damage, opponent.dodge, opponent.health, opponent.energy};
+    if (playerStats.type == "WATER" && opponentStats.type == "FIRE") {
+        playerStats.damage = static_cast<int>(playerStats.damage * 1.2);
+        opponentStats.damage = static_cast<int>(opponentStats.damage * 0.8);
+        fl_message("Type Advantage! Your WATER type is strong against FIRE type.\nYour damage increased to %d\nOpponent damage decreased to %d", playerStats.damage, opponentStats.damage);
+    } else if (playerStats.type == "FIRE" && opponentStats.type == "WATER") {
+        playerStats.damage = static_cast<int>(playerStats.damage * 0.8);
+        opponentStats.damage = static_cast<int>(opponentStats.damage * 1.2);
+        fl_message("Type Disadvantage! Your FIRE type is weak against WATER type.\nYour damage decreased to %d\nOpponent damage increased to %d", playerStats.damage, opponentStats.damage);
+    } else if (playerStats.type == "FIRE" && opponentStats.type == "GRASS") {
+        playerStats.damage = static_cast<int>(playerStats.damage * 1.2);
+        opponentStats.damage = static_cast<int>(opponentStats.damage * 0.8);
+        fl_message("Type Advantage! Your FIRE type is strong against GRASS type.\nYour damage increased to %d\nOpponent damage decreased to %d", playerStats.damage, opponentStats.damage);
+    } else if (playerStats.type == "GRASS" && opponentStats.type == "FIRE") {
+        playerStats.damage = static_cast<int>(playerStats.damage * 0.8);
+        opponentStats.damage = static_cast<int>(opponentStats.damage * 1.2);
+        fl_message("Type Disadvantage! Your GRASS type is weak against FIRE type.\nYour damage decreased to %d\nOpponent damage increased to %d", playerStats.damage, opponentStats.damage);
+    } else if (playerStats.type == "GRASS" && opponentStats.type == "WATER") {
+        playerStats.damage = static_cast<int>(playerStats.damage * 1.2);
+        opponentStats.damage = static_cast<int>(opponentStats.damage * 0.8);
+        fl_message("Type Advantage! Your GRASS type is strong against WATER type.\nYour damage increased to %d\nOpponent damage decreased to %d", playerStats.damage, opponentStats.damage);
+    } else if (playerStats.type == "WATER" && opponentStats.type == "GRASS") {
+        playerStats.damage = static_cast<int>(playerStats.damage * 0.8);
+        opponentStats.damage = static_cast<int>(opponentStats.damage * 1.2);
+        fl_message("Type Disadvantage! Your WATER type is weak against GRASS type.\nYour damage decreased to %d\nOpponent damage increased to %d", playerStats.damage, opponentStats.damage);
+    } else {
+        fl_message("No type advantage or disadvantage.");
+    }
 
     // Bundle into tuple for callbacks
     auto tuple = new std::tuple<BattleStats*, BattleStats*, Fl_Window*>(&playerStats, &opponentStats, main_win);
 
-    Fl_Button* attackLight = new Fl_Button(50, 50, 100, 30, "Light");
+    Fl_Button* attackLight = new Fl_Button(50, 50, 100, 30, "Light Attack");
     attackLight->callback(lightAttackCallback, tuple);
 
-    Fl_Button* attackRegular = new Fl_Button(50, 90, 100, 30, "Regular");
+    Fl_Button* attackRegular = new Fl_Button(50, 90, 100, 30, "Regular Attack");
     attackRegular->callback(attackCallback, tuple);
 
-    Fl_Button* attackHeavy = new Fl_Button(50, 130, 100, 30, "Heavy");
+    Fl_Button* attackHeavy = new Fl_Button(50, 130, 100, 30, "Heavy Attack");
     attackHeavy->callback(heavyAttackCallback, tuple);
 
     Fl_Button* heal = new Fl_Button(50, 170, 100, 30, "Heal");

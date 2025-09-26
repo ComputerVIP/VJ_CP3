@@ -1,3 +1,5 @@
 name, type, damage, dodge, health, energy
-Blorg, Water, 20, 15, 100, 10
-Zyzz, Fire, 30, 10, 90, 14
+Blorg,WATER,20,15,100,10
+Zyzz,FIRE,30,10,90,14
+Gloop,GRASS,25,20,70,18
+GC,FIRE,40,15,40,5

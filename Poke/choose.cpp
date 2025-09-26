@@ -35,9 +35,6 @@ std::vector<Pokemon> load_pokemon() {
         p.health = std::stoi(trim(hp));
         p.energy = std::stoi(trim(en));
 
-        std::cout << "Loaded " << p.name << " with energy " << p.energy << " and health " << p.health<<"\n";
-
-
         list.push_back(p);
     }
     return list;
@@ -71,7 +68,6 @@ int choice(Fl_Window* main_win) {
             if (opponent.name == player.name && pokes->size() > 1) {
                 opponent = (*pokes)[(dist(gen) + 1) % pokes->size()];
             }
-            std::cout << "You chose " << player.name << " vs " << opponent.name << "\n";
 
             w->window()->hide();
             battle(main_win, player, opponent);
