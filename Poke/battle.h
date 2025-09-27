@@ -11,6 +11,7 @@ struct Pokemon {
     int dodge;
     int health;
     int energy;
+    int crit;
 };
 
 // Runtime stats for battles
@@ -20,6 +21,7 @@ struct BattleStats {
     int dodge;
     int health;
     int energy;
+    int crit;
 };
 
 // Enemy/player action options

@@ -22,8 +22,6 @@ void lightAttackCallback(Fl_Widget* w, void* data) {
         enemyTurn(playerStats, opponentStats, battle_win, main_win);
         return;
     }
-
-    int damage = static_cast<int>(std::ceil(0.45 * playerStats.damage));
     playerStats.energy -= 2;
 
     std::random_device rd;
@@ -33,6 +31,16 @@ void lightAttackCallback(Fl_Widget* w, void* data) {
     if (dist(gen) < opponentStats.dodge) {
         fl_message("Opponent dodged your light attack!\n Energy: %d", playerStats.energy);
     } else {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist(0,100);
+        int damage = static_cast<int>(ceil(0.45 * playerStats.damage));
+        if (dist(gen) < playerStats.crit) {
+            damage = ceil(1.5*damage);
+            fl_message("Critical Hit! Damage increased to %d", damage);
+        } else {
+            damage = damage;
+        }
         opponentStats.health -= damage;
         fl_message("Light Attack dealt %d!\nOpponent health: %d\nYour energy: %d", damage, opponentStats.health, playerStats.energy);
     }
@@ -54,7 +62,13 @@ void attackCallback(Fl_Widget* w, void* data) {
     auto main_win       = std::get<2>(*tuple);
     auto battle_win     = w->window();
 
-    int damage = playerStats.damage;
+    if (playerStats.energy < 5) {
+        fl_message("Not enough energy for Regular Attack!");
+        enemyTurn(playerStats, opponentStats, battle_win, main_win);
+        return;
+    }
+    playerStats.energy -= 5;
+
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(0,100);
@@ -62,6 +76,16 @@ void attackCallback(Fl_Widget* w, void* data) {
     if (dist(gen) < opponentStats.dodge) {
         fl_message("Opponent dodged your regular attack!\n Energy: %d", playerStats.energy);
     } else {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist(0,100);
+        int damage = static_cast<int>(playerStats.damage);
+        if (dist(gen) < playerStats.crit) {
+            damage = ceil(1.5*damage);
+            fl_message("Critical Hit! Damage increased to %d", damage);
+        } else {
+            damage = damage;
+        }
         opponentStats.health -= damage;
         fl_message("Regular attack dealt %d!\nOpponent health: %d\nYour energy: %d", damage, opponentStats.health, playerStats.energy);
     }
@@ -101,6 +125,16 @@ void heavyAttackCallback(Fl_Widget* w, void* data) {
     if (dist(gen) < opponentStats.dodge) {
         fl_message("Opponent dodged your heavy attack!\n Energy: %d", playerStats.energy);
     } else {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist(0,100);
+        int damage = static_cast<int>(ceil(1.45*playerStats.damage));
+        if (dist(gen) < playerStats.crit) {
+            damage = ceil(1.5*damage);
+            fl_message("Critical Hit! Damage increased to %d", damage);
+        } else {
+            damage = damage;
+        }
         opponentStats.health -= damage;
         fl_message("Heavy Attack dealt %d!\nOpponent health: %d\nYour energy: %d", damage, opponentStats.health, playerStats.energy);
     }
@@ -123,7 +157,7 @@ void healCallback(Fl_Widget* w, void* data) {
     auto main_win       = std::get<2>(*tuple);
     auto battle_win     = w->window();
 
-    int healAmount = 5;
+    int healAmount = 10;
     playerStats.health += healAmount;
     fl_message("You healed for %d!\nYour health: %d", healAmount, playerStats.health);
 
@@ -141,7 +175,7 @@ void restCallback(Fl_Widget* w, void* data) {
     int energyGain = 5;
     playerStats.energy += energyGain;
     playerStats.health -= 3; // Lose some health when resting
-    fl_message("You rested and regained %d energy!\nYour energy: %d", energyGain, playerStats.energy);
+    fl_message("You rested and regained %d energy!\nYour energy: %d\nYour health: %d", energyGain, playerStats.energy, playerStats.health);
 
     enemyTurn(playerStats, opponentStats, battle_win, main_win);
 }
@@ -232,7 +266,7 @@ void enemyTurn(BattleStats& playerStats, BattleStats& opponentStats,Fl_Window* b
         }
 
         case HEAL: {
-            int healAmount = 5;
+            int healAmount = 10;
             opponentStats.health += healAmount;
             fl_message("Enemy healed for %d!\nOpponent health: %d",
                        healAmount, opponentStats.health);
@@ -254,14 +288,14 @@ void enemyTurn(BattleStats& playerStats, BattleStats& opponentStats,Fl_Window* b
 int battle(Fl_Window* main_win, const Pokemon& player, const Pokemon& opponent) {
     fl_message("Welcome to the battle! There are 3 types of actions:\n"
 "1. Attack (Light, Regular, Heavy) - Deals damage to opponent. Consumes energy.\n"
-"2. Heal - Restores a small amount of your health.\n"
+"2. Heal - Restores a small amount of your health for no energy cost.\n"
 "3. Rest - Regains a small amount of your energy, lose some health.\n\n"
 "Each action has its own strategy and energy cost. Choose wisely!\n"
 "You are battling %s! Your type is %s and theirs is %s", opponent.name.c_str(), player.type.c_str(), opponent.type.c_str());
     Fl_Window* win = new Fl_Window(400, 300, "Battle");
 
-    BattleStats playerStats {player.type,player.damage, player.dodge, player.health, player.energy};
-    BattleStats opponentStats {opponent.type,opponent.damage, opponent.dodge, opponent.health, opponent.energy};
+    BattleStats playerStats {player.type,player.damage, player.dodge, player.health, player.energy, player.crit};
+    BattleStats opponentStats {opponent.type,opponent.damage, opponent.dodge, opponent.health, opponent.energy, opponent.crit};
     if (playerStats.type == "WATER" && opponentStats.type == "FIRE") {
         playerStats.damage = static_cast<int>(playerStats.damage * 1.2);
         opponentStats.damage = static_cast<int>(opponentStats.damage * 0.8);
@@ -308,6 +342,15 @@ int battle(Fl_Window* main_win, const Pokemon& player, const Pokemon& opponent) 
     Fl_Button* rest = new Fl_Button(50, 210, 100, 30, "Rest");
     rest->callback(restCallback, tuple);
 
+    Fl_Button* stats = new Fl_Button(200, 100, 100, 30, "Stats");
+    stats->callback([](Fl_Widget* w, void* data) {
+        auto tuple = static_cast<std::tuple<BattleStats*, BattleStats*, Fl_Window*>*>(data);
+        auto& playerStats   = *std::get<0>(*tuple);
+        auto& opponentStats = *std::get<1>(*tuple);
+        fl_message("Your Stats:\nHealth: %d\nEnergy: %d\nDamage: %d\nDodge: %d\n\nOpponent Stats:\nHealth: %d\nEnergy: %d\nDamage: %d\nDodge: %d",
+                   playerStats.health, playerStats.energy, playerStats.damage, playerStats.dodge,
+                   opponentStats.health, opponentStats.energy, opponentStats.damage, opponentStats.dodge);
+    }, tuple);
 
     // Back button
     Fl_Button* back = new Fl_Button(200, 50, 100, 30, "Back");

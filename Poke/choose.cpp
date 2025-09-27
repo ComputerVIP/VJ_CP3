@@ -17,13 +17,14 @@ std::vector<Pokemon> load_pokemon() {
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         Pokemon p;
-        std::string dmg, ddg, hp, en;
+        std::string dmg, ddg, hp, en, cr;
         std::getline(ss, p.name, ',');
         std::getline(ss, p.type, ',');
         std::getline(ss, dmg, ',');
         std::getline(ss, ddg, ',');
         std::getline(ss, hp, ',');
         std::getline(ss, en, ',');
+        std::getline(ss, cr, ',');
         
         auto trim = [](std::string s) {
             s.erase(0, s.find_first_not_of(" \t\r\n"));
@@ -34,6 +35,7 @@ std::vector<Pokemon> load_pokemon() {
         p.dodge  = std::stoi(trim(ddg));
         p.health = std::stoi(trim(hp));
         p.energy = std::stoi(trim(en));
+        p.crit   = std::stoi(trim(cr));
 
         list.push_back(p);
     }
