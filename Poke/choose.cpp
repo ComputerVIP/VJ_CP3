@@ -45,7 +45,7 @@ std::vector<Pokemon> load_pokemon() {
 int choice(Fl_Window* main_win) {
     main_win->hide();
 
-    Fl_Window* win = new Fl_Window(300, 200, "Choose Pokemon");
+    Fl_Window* win = new Fl_Window(300, 600, "Choose Pokemon");
     std::vector<Pokemon> pokes = load_pokemon();
 
     int y = 20;
