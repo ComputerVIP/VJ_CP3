@@ -73,9 +73,9 @@ void button_cb(Fl_Widget* w, void* data) {
 
     file.open("scores.csv");
     if (file.is_open()) {
-        file << "Name,Score\n";
+        file << "Name,Score,Time\n";
         for (const auto& t : things) {
-            file << t.name << ": " << t.score << " --- "<< t.thyme<< "\n";
+            file << t.name << "," << t.score << "," << t.thyme << "\n";
         }
         fl_message("Added %s with score %d", name.c_str(), scoreInt);
     }
