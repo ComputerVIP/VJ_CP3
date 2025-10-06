@@ -25,17 +25,29 @@ When a title contains a space, which function should you use to read it properly
 Why might extra zeros be added to a string when converting a value without control?
     Default formatting
 How does controlling the string conversion process benefit your program?
+    Ensures consistent formatting
 Give an example scenario where parsing a string would be necessary in a program.
+    Reading data from a CSV file
 Why are images, audio, and PDFs not readable by humans when stored in files?
+    They are in binary format
 What file extensions are commonly used to create binary files?
+    .bin, .dat
 When writing to a binary file, what does the first parameter (reinterpret_cast<char*>(&numbers)) represent?
+    The data to write, cast to a char pointer
 Why does the binary file only take 12 bytes while the array of integers might be larger?
+    It only stores the raw binary data without formatting
 How does reading individual numbers from a binary file differ from reading the entire list at once?
+    You read them one by one instead of all at once
 What is the main difference between sequential search and binary search?
+    Sequential search checks each item one by one, while binary search divides the list in half each time
 In which type of data structure is binary search most efficient?
+    A sorted list
 What is a key requirement for binary search to work correctly on a list?
+    The list must be sorted
 How does sequential search find an item in a list?
+    It checks each item one by one
 Why is binary search generally faster than sequential search for large, sorted lists?
+    It eliminates half of the remaining items with each comparison
 */
 
 struct Person {
