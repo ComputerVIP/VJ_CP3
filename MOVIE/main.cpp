@@ -48,7 +48,13 @@ void add_cb(Fl_Widget* w, void* data) {
 
     t.director = fl_input("What's the director of the movie?") ?: "";
     const char* year_str = fl_input("What year was the movie released?");
-    t.year = year_str ? stoi(year_str) : 0;
+    try{
+        t.year = year_str ? stoi(year_str) : 0;
+    }
+    catch (const invalid_argument& ia) {
+        fl_message("Invalid year input!");
+        return;
+    }
     t.genre = fl_input("What's the genre of the movie?") ?: "";
     t.rating = fl_input("What's the age-rating of the movie?") ?: "";
     things.push_back(t);
