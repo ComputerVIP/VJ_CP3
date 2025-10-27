@@ -57,11 +57,8 @@ class ChessGame():
         return
     
     def check_space(self, black, white, new_pos):
-        print("In space")
         if self.colour == "white":
             for i in black:
-                print(i, i.colour, i.position)
-                print(self, self.colour, new_pos)
                 if i.position == new_pos:
                     print(f"You have captured a {i.colour} {i.type} at {i.position}")
                     black.remove(i)
@@ -75,7 +72,6 @@ class ChessGame():
         return False
     
     def check_pos(position, new_pos):
-        print("In pos")
         if (1 < position[0] > 8) or (1 < position[1] > 8):
             return False
         else: return True
@@ -95,25 +91,28 @@ class ChessGame():
                 return ch
     
     def show_board(white, black, display_base):
-        temp = display_base
-        f = 0
-        print("In")
-        for i in white:
-            print(i)
-            if i.position[0] > 1:
-                for a in temp:
-                    f += 1
-                    if f == (i.position[0]*15 + i.position[1]*2 +1):
-                        print(i.position[0]*15 + i.position[1]*2 +1)
-                        print(a)
-                    
-            elif i.position[0] == 1:
-                for a in temp:
-                    f += 1
-                    if f == (i.position[0]*15 + i.position[1]*2):
-                        print("Row 1")
-                        print(i.position[0]*15 + i.position[1]*2)
-                        print(a)
+        # Turn the board string into a mutable list of lists
+        lines = [list(line) for line in display_base.split('\n')]
+        
+        # Combine all pieces
+        pieces = white + black
+
+        for piece in pieces:
+            row, col = piece.position  # assume (row, col) is 1-indexed
+            symbol = piece.get_symbol()
+
+            # Calculate position in the string grid
+            # Each square takes 2 characters: symbol + space
+            # (so we convert col to its proper index)
+            char_index = (col - 1) * 2
+
+            # Replace the correct cell
+            lines[row - 1][char_index] = symbol
+
+        # Join everything back into a single string
+        temp = '\n'.join(''.join(line) for line in lines)
+        print(temp)
+
 
 
 

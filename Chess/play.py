@@ -20,29 +20,9 @@ Requirements:
 
 '''
 
-# ■  □  ▢
-# Each row is 15 chars, 8 blocks, 7 spaces
-# First row is always 1 more than the others, (16 regularly)
-#display_base = "■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■\n■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■\n■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■\n■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■"
-#a= 0
-# [2,1] == a= 19
-# [3,1] == 35
-'''
-for i in display_base:
-    a += 1
-    if a == 16:
-        print(i, "okokd")
-print("Done")
-'''
-board = [
-         [1,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],
-         [2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[2,7],[2,8],
-         [3,1],[3,2],[3,3],[3,4],[3,5],[3,6],[3,7],[3,8],
-         [4,1],[4,2],[4,3],[4,4],[4,5],[4,6],[4,7],[4,8],
-         [5,1],[5,2],[5,3],[5,4],[5,5],[5,6],[5,7],[5,8],
-         [6,1],[6,2],[6,3],[6,4],[6,5],[6,6],[6,7],[6,8],
-         [7,1],[7,2],[7,3],[7,4],[7,5],[7,6],[7,7],[7,8],
-         [8,1],[8,2],[8,3],[8,4],[8,5],[8,6],[8,7],[8,8]]
+
+
+print("This chess game is run with [row, column], not letters and numbers, because I feel like it. Also, I had a skill issue, the board's rows are flipped.")
 
 
 def main():
@@ -60,10 +40,6 @@ def main():
 5. Exit
     
     ''')
-    for i in white:
-        print(i.position, i.type, i.colour)
-    for i in black:
-        print(i.position, i.type, i.colour)
     if choice == "1":
         piece = ChessGame.find_piece(white, black)
         ie = list(map(int, input("What's the row and column of the move you want to do, seperated by a space?\n\n    ").split()))
