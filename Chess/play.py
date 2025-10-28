@@ -22,66 +22,74 @@ Requirements:
 
 
 
-print("This chess game is run with [row, column], not letters and numbers, because I feel like it. Also, I had a skill issue, the board's rows are flipped.")
+print("This chess game is run with [row, column], not letters and numbers, because I feel like it.")
 
 
 def main():
     display_base = "■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■\n■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■\n■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■\n■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■"
-    white = [(white_pawn1 := Pawn('white', [2,1], 'pawn')),(white_pawn2 := Pawn('white', [2,2], 'pawn')),(white_pawn3 := Pawn('white', [2,3], 'pawn')),(white_pawn4 := Pawn('white', [2,4], 'pawn')),(white_pawn5 := Pawn('white', [2,5], 'pawn')),(white_pawn6 := Pawn('white', [2,6], 'pawn')),(white_pawn7 := Pawn('white', [2,7], 'pawn')),(white_pawn8 := Pawn('white', [2,8], 'pawn')),(white_rook1 := Rook('white',[1,1],'rook'),(white_rook2 := Rook('white',[1,8],'rook'),(white_knight1 := Knight('white',[1,2],'knight')),(white_knight2 := Knight('white',[1,7],'knight')),(white_bishop1 := Bishop('white',[1,3],'bishop')),(white_bishop2 := Bishop('white',[1,6],'bishop')),(white_king := King('white',[1,4],'king')),(white_queen := Queen('white',[1,5],'queen'))]
-    black = [(black_pawn1 := Pawn('black', [3,1], 'pawn')), (black_pawn2 := Pawn('black', [7,2], 'pawn'))]
+    white = [(white_pawn1 := Pawn('white', [2,1], 'pawn')),(white_pawn2 := Pawn('white', [2,2], 'pawn')),(white_pawn3 := Pawn('white', [2,3], 'pawn')),(white_pawn4 := Pawn('white', [2,4], 'pawn')),(white_pawn5 := Pawn('white', [2,5], 'pawn')),(white_pawn6 := Pawn('white', [2,6], 'pawn')),(white_pawn7 := Pawn('white', [2,7], 'pawn')),(white_pawn8 := Pawn('white', [2,8], 'pawn')),(white_rook1 := Rook('white',[1,1],'rook')),(white_rook2 := Rook('white',[1,8],'rook')),(white_knight1 := Knight('white',[1,2],'knight')),(white_knight2 := Knight('white',[1,7],'knight')),(white_bishop1 := Bishop('white',[1,3],'bishop')),(white_bishop2 := Bishop('white',[1,6],'bishop')),(white_king := King('white',[1,4],'king')),(white_queen := Queen('white',[1,5],'queen'))]
 
-    ChessGame.show_board(white, black, display_base)
+    black = [(black_pawn1 := Pawn('black', [7,1], 'pawn')),(black_pawn2 := Pawn('black', [7,2], 'pawn')),(black_pawn3 := Pawn('black', [7,3], 'pawn')),(black_pawn4 := Pawn('black', [7,4], 'pawn')),(black_pawn5 := Pawn('black', [7,5], 'pawn')),(black_pawn6 := Pawn('black', [7,6], 'pawn')),(black_pawn7 := Pawn('black', [7,7], 'pawn')),(black_pawn8 := Pawn('black', [7,8], 'pawn')),(black_rook1 := Rook('black',[8,1],'rook')),(black_rook2 := Rook('black',[8,8],'rook')),(black_knight1 := Knight('black',[8,2],'knight')),(black_knight2 := Knight('black',[8,7],'knight')),(black_bishop1 := Bishop('black',[8,3],'bishop')),(black_bishop2 := Bishop('black',[8,6],'bishop')),(black_king := King('black',[8,4],'king')),(black_queen := Queen('black',[8,5],'queen'))]
 
-    choice = input('''1. Move Piece
+    # run the UI/game loop using the same piece lists so state persists
+    while True:
+        ChessGame.show_board(white, black, display_base)
+        if ChessGame.king_ded(white, black) is True:
+            print("Game over!")
+            break
+
+        choice = input('''1. Move Piece
 2. Check Pieces
 3. Get Position of Piece
 4. Get Piece Symbol
-5. Show board
 5. Exit
     
-    ''')
-    if choice == "1":
-        piece = ChessGame.find_piece(white, black)
-        ie = list(map(int, input("What's the row and column of the move you want to do, seperated by a space?\n\n    ").split()))
-        try:
-            ChessGame.move_piece(piece, ie, white, black)
-            return main()
-        except:
-            print("Invalid input/move")
-            return main()
-    elif choice == "2":
-        try:
-            ChessGame.pieces_left(white, black, input("What's your colour?\n\n    ".lower().strip()))
-            return main()
-        except:
-            print("Error in finding pieces left")
-            return main()
-    elif choice == "3":
-        try:
-            typ = input("What's the type of your piece?")
-            for i in black:
-                if i.colour == typ.lower().strip():
-                    ChessGame.piece_pos(i)  
-            for i in white:
-                if i.colour == typ.lower().strip():
-                    ChessGame.piece_pos(i)
-            return main()
-        except:
-            print("Invalid input!")
-            return main()
-    elif choice == "4":
-        pi = ChessGame.find_piece(white, black)
-        try:
-            print(pi.get_symbol)
-            return main()
-        except:
-            print("Error in finding character!")
-            return main()
-    elif choice == "5":
-        return
-    else:
-        print("Invalid choice!")
-        return main()
+    ''').strip()
+
+        if choice == "1":
+            piece = ChessGame.find_piece(white, black)
+            if piece is None:
+                continue
+            ie = list(map(int, input("What's the row and column of the move you want to do, seperated by a space?\n\n    ").split()))
+            try:
+                # operate on the same piece instance so its .position is updated in the lists
+                piece.move(piece.position, ie, white, black)
+            except Exception as e:
+                print("Invalid input/move:", e)
+            continue
+
+        elif choice == "2":
+            try:
+                ChessGame.pieces_left(white, black, input("What's your colour?\n\n    ").lower().strip())
+            except:
+                print("Error in finding pieces left")
+            continue
+
+        elif choice == "3":
+            try:
+                typ = input("What's the type of your piece?").lower().strip()
+                for i in black + white:
+                    if i.type == typ:
+                        ChessGame.piece_pos(i)  
+            except:
+                print("Invalid input!")
+            continue
+
+        elif choice == "4":
+            pi = ChessGame.find_piece(white, black)
+            try:
+                if pi:
+                    print(pi.get_symbol())
+            except:
+                print("Error in finding character!")
+            continue
+
+        elif choice == "5":
+            break
+
+        else:
+            print("Invalid choice!")
+            continue
     
 
 main()
