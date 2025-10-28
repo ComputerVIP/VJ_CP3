@@ -27,7 +27,7 @@ print("This chess game is run with [row, column], not letters and numbers, becau
 
 def main():
     display_base = "■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■\n■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■\n■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■\n■ □ ■ □ ■ □ ■ □\n□ ■ □ ■ □ ■ □ ■"
-    white = [(white_pawn1 := Pawn('white', [2,1], 'pawn')),(white_pawn2 := Pawn('white', [2,2], 'pawn'))]
+    white = [(white_pawn1 := Pawn('white', [2,1], 'pawn')),(white_pawn2 := Pawn('white', [2,2], 'pawn')),(white_pawn3 := Pawn('white', [2,3], 'pawn')),(white_pawn4 := Pawn('white', [2,4], 'pawn')),(white_pawn5 := Pawn('white', [2,5], 'pawn')),(white_pawn6 := Pawn('white', [2,6], 'pawn')),(white_pawn7 := Pawn('white', [2,7], 'pawn')),(white_pawn8 := Pawn('white', [2,8], 'pawn')),(white_rook1 := Rook('white',[1,1],'rook'),(white_rook2 := Rook('white',[1,8],'rook'),(white_knight1 := Knight('white',[1,2],'knight')),(white_knight2 := Knight('white',[1,7],'knight')),(white_bishop1 := Bishop('white',[1,3],'bishop')),(white_bishop2 := Bishop('white',[1,6],'bishop')),(white_king := King('white',[1,4],'king')),(white_queen := Queen('white',[1,5],'queen'))]
     black = [(black_pawn1 := Pawn('black', [3,1], 'pawn')), (black_pawn2 := Pawn('black', [7,2], 'pawn'))]
 
     ChessGame.show_board(white, black, display_base)
