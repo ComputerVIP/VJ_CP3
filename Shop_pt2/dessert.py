@@ -80,25 +80,45 @@ class DessertShop:
         return Candy(name, ppp, amntof_pds)
     
     def user_prompt_icecream():
-        name = input("Enter the name of the ice cream: ")
-        pps = float(input("Enter the price per scoop: "))
-        scoops = int(input("Enter the number of scoops: "))
-        return IceCream(name, pps, scoops)
-    
+        try:
+            name = input("Enter the name of the ice cream: ")
+        except:
+            print("Invalid input for name.")
+        try:
+            pps = float(input("Enter the price per scoop: "))
+            scoops = int(input("Enter the number of scoops: "))
+            return IceCream(name, pps, scoops)
+        except:
+            print("Invalid input for ice cream.")
+            return None
+
     def user_prompt_cookie():
         try:
             name = input("Enter the name of the cookie: ")
         except:
             print("Invalid input for name.")
-        ppd = float(input("Enter the price per dozen: "))
-        amnt = int(input("Enter the amount (number of cookies): "))
-        return Cookie(name, ppd, amnt)
-    
+        try:
+            ppd = float(input("Enter the price per dozen: "))
+            amnt = int(input("Enter the amount (number of cookies): "))
+            return Cookie(name, ppd, amnt)
+        except:
+            print("Invalid input for price or amount.")
+            return None
+
     def user_prompt_sundae():
-        name = input("Enter the name of the sundae: ")
-        pps = float(input("Enter the price per scoop: "))
-        scoops = int(input("Enter the number of scoops: "))
-        topping = input("Enter the topping: ")
-        top_price = float(input("Enter the price of the topping: "))
-        return Sundae(name, pps, scoops, topping, top_price)
-    
+        try:
+            name = input("Enter the name of the sundae: ")
+        except:
+            print("Invalid input for name.")
+        try:
+            pps = float(input("Enter the price per scoop: "))
+            scoops = int(input("Enter the number of scoops: "))
+        except:
+            print("Invalid input for price or scoops.")
+        try:
+            topping = input("Enter the topping: ")
+            top_price = float(input("Enter the price of the topping: "))
+            return Sundae(name, pps, scoops, topping, top_price)
+        except:
+            print("Invalid input for topping or topping price.")
+            return None
