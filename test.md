@@ -18,8 +18,10 @@ __NOTES:__
 5. Main Cap ![Main Cap](./images/m_cap.jpg)
 6. #6 Touch Pad Resistors ![TP Res](./images/res.jpg)
 7. #4 Display Caps ![Disp Caps](./images/d_cap.jpg)
-8. 32 AWG Wire (lots of it, I recommend 3 different colours, I used red, yellow, and blue)
-9. __FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX__
+8. Headers (there are only 2, 2, and 3 required; you do not need all the header spaces)
+9. 32 AWG Wire (lots of it, I recommend 3 different colours, I used red, yellow, and blue)
+10. __FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX__
 
 ## Instructions
-Placeholder
+First, You're gonna want to solder top-side comps.
+### Test
