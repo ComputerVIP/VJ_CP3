@@ -22,6 +22,25 @@ __NOTES:__
 9. 32 AWG Wire (lots of it, I recommend 3 different colours, I used red, yellow, and blue)
 10. __FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX__
 
-## Instructions
+# Instructions
 First, You're gonna want to solder top-side comps.
-### Test
+
+### Top
++ You will need the Touch Pad Resistors (TPR). Each TPR goes on the unmarked small pads on the board, they are all near their respective TP.
++ The main Cap is the only thing left on this side, that one is right next to the top right 3v3 pin. Do not short this one, we'll also be bodging some wires from here, later.
+Now, let's flip to the back of the board for some easier parts to handle
+
+### Bottom
++ You're going to want to solder U2 first, but be careful, the piece is bigger than the footprint, I recommend (committing a electrical sin) to bend the legs backwards, they should be facing inwards, and U2 should be above the ground a little bit, that's fine, as we are putting on the headers later. The little indent on U2 should be oriented to the white arrow on the board (see image below) ![U2 Orient](./images/u2_orient.jpg)
++ The crystal is a little bit harder, but not by much. It is found right below the FPC connector (see image below) and is non-polar. I recommend tilting it to a 45 degree angle, having one side facing towards you as you solder, or you could use rework or something. ![Crystal stuff](./images/crystal_add.jpg)
++ I'd like to point out really quick that there are a lot of "missing parts" on the board, solder points with nothing on them, this is not intentional, but at this point, everything on the board is done (with the exception of headers), everything off it requires the remaining parts
++ Solder the headers on, you can do the entire row, but if you're doing just 2,2,3 headers, the headers should look like this image... ![Headers](./images/headers.jpg)
+
+## Bodge wires
+One quick message to all you out there, the display bodging is not for the faint of heart, neither is connecting to the FPC pins, nor any of the rest of this. I recommend magnification for this section, I used +3.00 glasses and it worked well, anything else will do, too, but make sure the board is stationary. You will need a very fine tip for this stuff... and probably an afternoon.
+### Display
+This one is by far the hardest, so buckle up.
+To start, apply solder to pins 1-4 on the display, none of the others quite yet. You need to solder the display caps onto these pins bridging 1-2, 3-4 (see below)<br>
+![Disp Caps](./images/d_cap_add.jpg)<br>
+
+Now, solder the pin 5 on the opposite side of the display, then 7, then 9, all the way to 15. For these, you need a Bodge wires on every one of them. No exceptions.
