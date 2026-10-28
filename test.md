@@ -12,14 +12,14 @@ __NOTES:__
 
 ## Material list
 1. Board
-2. Display (0.42")
-3. U2 (the real name is very long, I'm not pasting it here, but it's the chip-looking thing with 8 pins)
-4. Crystal
-5. Main Cap
-6. #6 Touch Pad Resistors
-7. #4 Display Caps
+2. Display (0.42") ![Display](./images/display.jpg)
+3. U2 (the real name is very long, I'm not pasting it here, but it's the chip-looking thing with 8 pins) ![U2](./images/u2.jpg)
+4. Crystal ![Crystal](./images/crystal.jpg)
+5. Main Cap ![Main Cap](./images/m_cap.jpg)
+6. #6 Touch Pad Resistors ![TP Res](./images/res.jpg)
+7. #4 Display Caps ![Disp Caps](./images/d_cap.jpg)
 8. 32 AWG Wire (lots of it, I recommend 3 different colours, I used red, yellow, and blue)
-9. FLUX FLUX FLUX FLUX FLUX FLUX
+9. __FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX FLUX__
 
 ## Instructions
 Placeholder
